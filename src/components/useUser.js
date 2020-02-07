@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
- 
+import useAxios from 'axios-hooks' 
+
 function getCurrentUser(accessToken) {
   if (accessToken  === 'token') {
     return {
@@ -9,7 +10,7 @@ function getCurrentUser(accessToken) {
 }
  
 const initialState = {
-  user: {},
+  user: localStorage.getItem('user'),
   accessToken: undefined,
 };
  
@@ -42,4 +43,13 @@ export function UserProvider({ children }) {
   );
 }
  
-export const useUser = () => useContext(UserContext);
+// export const useUser = () => useContext(UserContext);
+
+  export const useUser = () => {
+    const[{data,loading, error}]=useAxios(
+      'http://localhost:8080/getUser'
+      )
+
+    console.log(data);
+    return data;
+  }
