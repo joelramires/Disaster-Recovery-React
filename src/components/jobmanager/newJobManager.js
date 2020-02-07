@@ -17,6 +17,7 @@ import Copyright from '../Media/copyright';
 import Box from '@material-ui/core/Box';
 import useAxios from 'axios-hooks'
 // import GridItem from '../Grid/GridItem';
+import axios from 'axios'
 
 
 const useStyles = makeStyles(theme => ({
@@ -44,6 +45,13 @@ export default function NewJobManager(props) {
   const [open, setOpen] = React.useState(false);
   const [laborCode, setlaborCode] = useState({});
 
+  const initialState = {
+    jobCode:"",
+    jobDescription:"",
+    rateHourly:"0",
+    maxHour:"0",
+  }
+
   // const [machineCode, setMachineCode] = React.useState("");
 
   // const initialState = {jobCode:'', jobDescription:'', maxHours:'', rateHourly:'' }
@@ -54,8 +62,13 @@ export default function NewJobManager(props) {
 
   // };
 
-  function handleChange (event) {
-    setlaborCode({...laborCode, [event.target.name]: event.target.value});
+  const [data, setData] = React.useState(initialState);
+  const handleInputChange = event => {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value
+    });
+    console.log(data.jobCode)
   };
   
   // function handleSubmit(event) { 
@@ -72,19 +85,28 @@ export default function NewJobManager(props) {
   //   postArticle();
   // }
 
-  async function handleDelete() { 
-    try {
-      await useAxios.delete(`http://localhost:8080/deleteJobManager/${props.match.params.id}`); 
-      props.history.push("/jobManager"); 
-    } catch(error) {
-      console.error(error);
-    }
-  }
-  // const handleDelete = async post => {
-  //   await useAxios.delete('http://localhost:8080/deleteJobManager' + '/' + post.id);
-  //   const posts = this.state.posts.filter(p => p.id !== post.id);
-  //   this.setState({ posts });
-  // };
+  // async function handleDelete() { 
+  //   try {
+  //     await useAxios.post(`http://localhost:8080/deleteJobManager/${props.match.params.id}`); 
+  //     props.history.push("/jobManager"); 
+  //   } catch(error) {
+  //     console.error(error);
+  //   }
+  // }
+  
+  const handleFormSubmit = event => {
+    console.log("handleFormSubmit");
+      event.preventDefault();
+      setData({
+        ...data,
+        isSubmitting: true,
+        errorMessage: null
+      });
+      axios.post("http://localhost:8080/newJobManager", data)
+      .then(
+        window.location.href = "http://localhost:3000/jobData"
+      ) 
+    };
 
   const handleClose = () => {
     setOpen(false);
@@ -104,27 +126,31 @@ export default function NewJobManager(props) {
         <Typography component="h1" variant="h5">
           Create New Job Code
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleFormSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField variant="outlined" margin="normal"
                                 required fullWidth autoFocus
-                                id="jobCode" label="Job Code" name="text" />
+                                id="jobCode" label="Job Code" name="jobCode" onChange={handleInputChange}
+                                value={data.jobCode}/>
             </Grid>
             <Grid item xs={12} >
               <TextField variant="outlined" margin="normal"
                             required fullWidth 
-                            id="jobDescription" label="Description" name="text" />
+                            id="jobDescription" label="Description" name="jobDescription" onChange={handleInputChange}
+                            value={data.jobDescription}/>
             </Grid>
             <Grid item xs={12}>
               <TextField variant="outlined" margin="normal"
                             required fullWidth 
-                            id="rateHourly" label="Hourly Rate" name="text" />
+                            id="rateHourly" label="Hourly Rate" name="rateHourly" onChange={handleInputChange}
+                            value={data.rateHourly}/>
             </Grid>
             <Grid item xs={12}>
               <TextField variant="outlined" margin="normal"
                             required fullWidth 
-                            id="maxHours" label="Max Hour" name="text" />
+                            id="maxHour" label="Max Hour" name="maxHour" onChange={handleInputChange}
+                            value={data.maxHours}/>
             </Grid>
             <Grid item xs={12} sm={6}>
               <Button type="reset" fullWidth
@@ -135,7 +161,7 @@ export default function NewJobManager(props) {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-            <Button variant="contained" color="primary" size="large" fullWidth
+            <Button type="submit" variant="contained" color="primary" size="large" fullWidth
                 className={classes.button} startIcon={<SaveIcon />} >
                 Submit
             </Button>
