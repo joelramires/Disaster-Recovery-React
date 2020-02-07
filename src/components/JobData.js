@@ -34,32 +34,24 @@ const StyledTableCell = withStyles(theme => ({
 }))(TableCell);
 
 export default function JobData(props) {
-  const [laborCode, setlaborCode] = useState({});
-  const [showLoading, setShowLoading] = useState(true);
-  const {id} = useParams();
-    
   const[{data,loading, error}]=useAxios(
   'http://localhost:8080/jobManager'
   )
   
 if (loading) return <p>Loading...</p>
 if (error) return <p>Error!</p>
-// const handleDelete = event => {
-//   const { id } = event.target.parentElement;
-//   laborCode.splice(id, 1)
-//   setlaborCode([...laborCode]);
-// }
 
 
-async function handleDelete() { 
+async function handleDelete(id) { 
   try {
-    console.log(useParams.id)
+    // console.log(useParams.id)
     await axios.delete(`http://localhost:8080/deleteJobManager/${id}`); 
-    props.history.push("/jobManager"); 
+    props.push("/jobData"); 
   } catch(error) {
     console.error(error);
   }
   console.log("deleted");
+  window.location.reload()
 }
 // const apiUrl = "http://localhost:8080/deleteJobManager/" + props.match.params.id;
 
@@ -84,7 +76,7 @@ async function handleDelete() {
         </TableHead>
         <TableBody>
           {data.map(job => (
-            <TableRow key={job.id}>
+            <TableRow key={job.jobId}>
               <TableCell>{job.jobCode}</TableCell>
               <TableCell>{job.jobDescription}</TableCell>
               <TableCell>{job.rateHourly}</TableCell>
@@ -97,7 +89,7 @@ async function handleDelete() {
                     </IconButton>
                 </Tooltip>
                 <Tooltip id="tooltip-top-start"
-                title="Remove" onClick={handleDelete} placement="top">
+                title="Remove" onClick={() => handleDelete(job.jobId)} placement="top">
                   <IconButton color="secondary" aria-label="Close">
                     <Close />
                   </IconButton>

@@ -12,7 +12,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Copyright from '../Media/copyright'; 
 import Box from '@material-ui/core/Box';
-
+import axios from 'axios'
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -36,22 +36,36 @@ const useStyles = makeStyles(theme => ({
 
 export default function NewMachineManager() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [laborCode, setlaborCode] = React.useState("");
 
-  const [machineCode, setMachineCode] = React.useState("");
-  const handleChange = event => {
-    setlaborCode(event.target.value);
-
+  const initialState = {
+    machineCode:"",
+    description:"",
+    rate:"0",
+    maxHours:"0",
+  }
+  const [data, setData] = React.useState(initialState);
+  const handleInputChange = event => {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value
+    });
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleFormSubmit = event => {
+    console.log("handleFormSubmit");
+      event.preventDefault();
+      setData({
+        ...data,
+        isSubmitting: true,
+        errorMessage: null
+      });
+      console.log(data.machineCode);
+      axios.post("http://localhost:8080/newMachineManager", data)
+      .then(
+        window.location.href = "http://localhost:3000/machineData"
+      ) 
+    };
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
   return (
     
     <Container component="main" maxWidth="xs">
@@ -63,27 +77,31 @@ export default function NewMachineManager() {
         <Typography component="h1" variant="h5">
           Create New Machine Code
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleFormSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField variant="outlined" margin="normal"
-                                required fullWidth autoFocus
-                                id="machineCode" label="Machine Code" name="text" />
+                                required fullWidth
+                                id="machineCode" label="Machine Code" name="machineCode" onChange={handleInputChange}
+                                value={data.machineCode}/>
             </Grid>
             <Grid item xs={12} >
               <TextField variant="outlined" margin="normal"
                             required fullWidth 
-                            id="description" label="Description" name="text" />
+                            id="description" label="Description" name="description" onChange={handleInputChange}
+                            value={data.description}/>
             </Grid>
             <Grid item xs={12}>
               <TextField variant="outlined" margin="normal"
                             required fullWidth 
-                            id="rate" label="Hourly Rate" name="text" />
+                            id="rate" label="Hourly Rate" name="rate" onChange={handleInputChange}
+                            value={data.rate}/>
             </Grid>
             <Grid item xs={12}>
               <TextField variant="outlined" margin="normal"
                             required fullWidth 
-                            id="maxHours" label="Max Hour Per Day" name="text" />
+                            id="maxHours" label="Max Hour Per Day" name="maxHours" onChange={handleInputChange}
+                            value={data.maxHours}/>
             </Grid>
             <Grid item xs={12} sm={6}>
               <Button type="reset" fullWidth
@@ -94,7 +112,7 @@ export default function NewMachineManager() {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-            <Button variant="contained" color="primary" size="large" fullWidth
+            <Button type="submit" variant="contained" color="primary" size="large" fullWidth
                 className={classes.button} startIcon={<SaveIcon />} >
                 Submit
             </Button>
