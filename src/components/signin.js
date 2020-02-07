@@ -15,6 +15,7 @@ import Copyright from './Media/copyright';
 import { useUser } from './useUser';
 import Dashboard from './dashboard';
 import { AuthContext } from '../App';
+import jwt_decode from 'jwt-decode'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -124,7 +125,11 @@ export const SignInSide = (props) => {
         .then(resJson => {
           console.log(resJson)
           localStorage.setItem("token", resJson);
-          console.log(localStorage.getItem("token"));
+          const decoded = jwt_decode(resJson)
+          console.log(decoded);
+          localStorage.setItem("username", decoded.sub)
+          localStorage.setItem("Author", decoded.authorities)
+          // localStorage.setItem("Author", decoded.)
           // dispatch({
           //     type: "LOGIN",
           //     payload: resJson

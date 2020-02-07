@@ -25,11 +25,13 @@ const useStyles = makeStyles(theme => ({
 export default function ButtonAppBar(props) {
   const classes = useStyles();
 
-  const { user, setAccessToken } = useUser();
+  const user = localStorage.getItem("username");
+  const author = localStorage.getItem("Author");
   const { classes1 } = props;
 
   function logout() {
-    setAccessToken(null);
+    localStorage.removeItem("token")
+    localStorage.removeItem("username")
   }
 
   return (  
@@ -44,9 +46,9 @@ export default function ButtonAppBar(props) {
           </Typography>
           {/* <Link to="signIn" class="btn btn-info btn-lg" role="button" color="inherit" aria-pressed="true">Login</Link>   */}
           <Typography variant="h6" color="inherit" className={classes.grow}>
-          {user.name ? user.name : <Link to="signIn" class="btn btn-info btn-lg" role="button" color="inherit" aria-pressed="true">Login</Link>}
+          {user ? user + "(" + author + ")" : <Link to="signIn" class="btn btn-info btn-lg" role="button" color="inherit" aria-pressed="true">Login</Link>}
         </Typography>
-        {user.name && <Button class="btn btn-info btn-lg ml-3" onClick={logout}>Log Out</Button>}
+        {user && <Link to="/" class="btn btn-info btn-lg ml-3" role="button" onClick={logout} color="inherit" aria-pressed="true">Log Out</Link>}
         </Toolbar>
       </AppBar>
     </div>
