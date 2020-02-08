@@ -29,23 +29,23 @@ const StyledTableCell = withStyles(theme => ({
   }
 }))(TableCell);
 
-export default function AdminData(props) {
+export default function TimeSheetData(props) {
   const[{data,loading, error}]=useAxios(
-  'http://localhost:8080/machineManager'
+  'http://localhost:8080/timeSheet'
   )
   
 if (loading) return <p>Loading...</p>
 if (error) return <p>Error!</p>
 
 
-async function handleDelete(id) { 
+async function handleApproval(id) { 
   try {
-    // console.log(useParams.id)
-    await axios.delete(`http://localhost:8080/deleteMachineManager/${id}`); 
+    console.log(id)
+    await axios.post(`http://localhost:8080/approvalTimesheet/${id}`); 
   } catch(error) {
     console.error(error);
   }
-  console.log("deleted");
+  console.log("Approvaled");
   window.location.reload()
 }
 
@@ -61,36 +61,36 @@ async function handleDelete(id) {
       <Table size="small">        
         <TableHead>          
           <TableRow>
-            <StyledTableCell>Machine Code</StyledTableCell>
-            <StyledTableCell>Description</StyledTableCell>
-            <StyledTableCell>Hourly Rate</StyledTableCell>
-            <StyledTableCell>Max Hours</StyledTableCell>
-            <StyledTableCell>Actions</StyledTableCell>
+            <StyledTableCell>Site Code</StyledTableCell>
+            <StyledTableCell>Total Amount</StyledTableCell>
+            <StyledTableCell>Created Date</StyledTableCell>
+            <StyledTableCell>Total Hours</StyledTableCell>
+            <StyledTableCell>Username</StyledTableCell>
+            <StyledTableCell>Status</StyledTableCell>
+            <StyledTableCell>Approval</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(machine => (
-            <TableRow key={machine.id}>
-              <TableCell>{machine.machineCode}</TableCell>
-              <TableCell>{machine.description}</TableCell>
-              <TableCell>{machine.rate}</TableCell>
-              <TableCell>{machine.maxHours}</TableCell>
+          {data.map(timeSheet => (
+            <TableRow key={timeSheet.TimeSheetId}>
+              <TableCell>{timeSheet.siteCode}</TableCell>
+              <TableCell>{timeSheet.totalAmount}</TableCell>
+              <TableCell>{timeSheet.creatDate}</TableCell>
+              <TableCell>{timeSheet.Hours}</TableCell>
+              <TableCell>{timeSheet.user_name}</TableCell>
+              <TableCell>{timeSheet.status}</TableCell>
               <TableCell>
-                <Tooltip id="tooltip-top"
-                  title="Edit Task" placement="top">
-                    <IconButton style={{ color: purple[500] }} aria-label="Edit">
-                      <Edit />
-                    </IconButton>
-                </Tooltip>
-                <Tooltip id="tooltip-top-start"
-                title="Remove" onClick={() => handleDelete(machine.id)} placement="top">
-                  <IconButton color="secondary" aria-label="Close">
-                    <Close />
-                  </IconButton>
-                </Tooltip>
+              {timeSheet.status === "approval" ? "" : 
+              <Tooltip id="tooltip-top-start"
+              title="Approval" onClick={() => handleApproval(timeSheet.timeSheetId)} placement="top">
+              <IconButton style={{ color: purple[500] }} aria-label="Approv">
+              <Edit />
+            </IconButton>
+            </Tooltip>}
               </TableCell>
             </TableRow>
-          ))}
+          ))
+        }
         </TableBody>
       </Table>
     </React.Fragment>

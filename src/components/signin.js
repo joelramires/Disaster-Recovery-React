@@ -129,6 +129,7 @@ export const SignInSide = (props) => {
           console.log(decoded);
           localStorage.setItem("username", decoded.sub)
           localStorage.setItem("Author", decoded.authorities)
+          window.location.href = "http://localhost:3000/dashboard"
           // localStorage.setItem("Author", decoded.)
           // dispatch({
           //     type: "LOGIN",

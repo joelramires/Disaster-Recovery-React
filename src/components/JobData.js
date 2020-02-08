@@ -34,10 +34,6 @@ const StyledTableCell = withStyles(theme => ({
 }))(TableCell);
 
 export default function JobData(props) {
-  const [laborCode, setlaborCode] = useState(false);
-  const [showLoading, setShowLoading] = useState(true);
-  const {id} = useParams();
-    
   const[{data,loading, error}]=useAxios(
   'http://localhost:8080/jobManager'
   )
@@ -46,16 +42,17 @@ if (loading) return <p>Loading...</p>
 if (error) return <p>Error!</p>
 
 async function handleDelete(id) { 
-  
   try {
-    await axios.delete(`http://localhost:8080/deleteJobManager/${id}`) 
+    // console.log(useParams.id)
+    await axios.delete(`http://localhost:8080/deleteJobManager/${id}`); 
     props.push("/jobData"); 
-    const newSatate = () => setlaborCode(true);
+
   } catch(error) {
     console.error(error);
     
   }
   console.log("deleted");
+  window.location.reload()
 }
 
   return (
@@ -79,7 +76,7 @@ async function handleDelete(id) {
         </TableHead>
         <TableBody>
           {data.map(job => (
-            <TableRow key={job.id}>
+            <TableRow key={job.jobId}>
               <TableCell>{job.jobCode}</TableCell>
               <TableCell>{job.jobDescription}</TableCell>
               <TableCell>{job.rateHourly}</TableCell>

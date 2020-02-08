@@ -3,6 +3,7 @@ import SignInSide from './components/signin'
 import Dashboard from './components/dashboard';
 import SignUp from './components/signup';
 import AddTimeSheet from './components/timesheet/newTimeSheet';
+import ApprovalTimesheet from './components/timeSheetData'
 import { Switch,Route,Redirect } from "react-router-dom";
 import HomePage from './components/homePage'
 import JobManager from './components/jobmanager/newJobManager';
@@ -66,8 +67,8 @@ function App() {
       <Route path="/jobData/:id" exact component={JobDataDelete}></Route>
         <Route path="/newMachineManager" exact component={MachineManager}></Route>
         <Route path="/newJobManager" exact component={JobManager}></Route>
-        <Route path="/newJobWorkload" exact component={JobWorkload}></Route>
-        <Route path="/timesheet" exact component={AddTimeSheet}></Route>
+        <Route path="/timesheet" exact component={ApprovalTimesheet}></Route>
+        <Route path="/addtimesheet" exact component={AddTimeSheet}></Route>
         <Route path="/jobData" exact component={JobData}></Route>
         <Route path="/machineData" exact component={MachineData}></Route>
         <Route path="/dashboard" exact component={Dashboard}></Route>
