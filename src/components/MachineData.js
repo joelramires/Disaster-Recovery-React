@@ -81,7 +81,7 @@ if (error) return <p>Error!</p>
         <TableBody>
           {data.map(machine => (
             <TableRow key={machine.id}>
-              <TableCell>{machine.machinecode}</TableCell>
+              <TableCell>{machine.machineCode}</TableCell>
               <TableCell>{machine.description}</TableCell>
               <TableCell>{machine.rate}</TableCell>
               <TableCell>{machine.maxHours}</TableCell>

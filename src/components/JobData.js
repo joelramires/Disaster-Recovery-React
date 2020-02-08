@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -34,7 +34,7 @@ const StyledTableCell = withStyles(theme => ({
 }))(TableCell);
 
 export default function JobData(props) {
-  const [laborCode, setlaborCode] = useState({});
+  const [laborCode, setlaborCode] = useState(false);
   const [showLoading, setShowLoading] = useState(true);
   const {id} = useParams();
     
@@ -44,24 +44,19 @@ export default function JobData(props) {
   
 if (loading) return <p>Loading...</p>
 if (error) return <p>Error!</p>
-// const handleDelete = event => {
-//   const { id } = event.target.parentElement;
-//   laborCode.splice(id, 1)
-//   setlaborCode([...laborCode]);
-// }
 
-
-async function handleDelete() { 
+async function handleDelete(id) { 
+  
   try {
-    console.log(useParams.id)
-    await axios.delete(`http://localhost:8080/deleteJobManager/${id}`); 
-    props.history.push("/jobManager"); 
+    await axios.delete(`http://localhost:8080/deleteJobManager/${id}`) 
+    props.push("/jobData"); 
+    const newSatate = () => setlaborCode(true);
   } catch(error) {
     console.error(error);
+    
   }
   console.log("deleted");
 }
-// const apiUrl = "http://localhost:8080/deleteJobManager/" + props.match.params.id;
 
   return (
     <React.Fragment>      
@@ -97,7 +92,7 @@ async function handleDelete() {
                     </IconButton>
                 </Tooltip>
                 <Tooltip id="tooltip-top-start"
-                title="Remove" onClick={handleDelete} placement="top">
+                title="Remove" onClick={() => handleDelete(job.jobId)} placement="top">
                   <IconButton color="secondary" aria-label="Close">
                     <Close />
                   </IconButton>

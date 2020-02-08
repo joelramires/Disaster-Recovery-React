@@ -46,7 +46,7 @@ export default function ButtonAppBar(props) {
           </Typography>
           {/* <Link to="signIn" class="btn btn-info btn-lg" role="button" color="inherit" aria-pressed="true">Login</Link>   */}
           <Typography variant="h6" color="inherit" className={classes.grow}>
-          {user ? user + "(" + author + ")" : <Link to="signIn" class="btn btn-info btn-lg" role="button" color="inherit" aria-pressed="true">Login</Link>}
+          {user ? user + " (" + author + ")" : <Link to="signIn" class="btn btn-info btn-lg" role="button" color="inherit" aria-pressed="true">Login</Link>}
         </Typography>
         {user && <Link to="/" class="btn btn-info btn-lg ml-3" role="button" onClick={logout} color="inherit" aria-pressed="true">Log Out</Link>}
         </Toolbar>

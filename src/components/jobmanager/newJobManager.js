@@ -16,6 +16,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Copyright from '../Media/copyright'; 
 import Box from '@material-ui/core/Box';
 import useAxios from 'axios-hooks'
+import axios from 'axios'
 // import GridItem from '../Grid/GridItem';
 
 
@@ -44,47 +45,17 @@ export default function NewJobManager(props) {
   const [open, setOpen] = React.useState(false);
   const [laborCode, setlaborCode] = useState({});
 
-  // const [machineCode, setMachineCode] = React.useState("");
-
-  // const initialState = {jobCode:'', jobDescription:'', maxHours:'', rateHourly:'' }
-  // const [laborCode, setlaborCode] = useState(initialState);
-  
-  // const handleChange = event => {
-  //   setlaborCode(event.target.value);
-
-  // };
-
   function handleChange (event) {
     setlaborCode({...laborCode, [event.target.name]: event.target.value});
   };
   
-  // function handleSubmit(event) { 
-  //   event.preventDefault();  
-  //   if(!laborCode.title || !laborCode.content ) return 
-  //   async function postArticle() {
-  //     try {
-  //       const response = await post('/api/articles', laborCode); 
-  //       props.history.push(`/articles/${response.data._id}`);  
-  //     } catch(error) {
-  //       console.log('error', error);
-  //     }
-  //   }
-  //   postArticle();
-  // }
-
-  async function handleDelete() { 
-    try {
-      await useAxios.delete(`http://localhost:8080/deleteJobManager/${props.match.params.id}`); 
-      props.history.push("/jobManager"); 
-    } catch(error) {
-      console.error(error);
-    }
+  function handleSubmit(event) { 
+    event.preventDefault();  
+   
+    const initialState = {jobCode:'', jobDescription:'', maxHours:'', rateHourly:'' }
+    axios.post('http://localhost:8080/newJobWorkload', setlaborCode)
+    .then(res => console.log(res.data));
   }
-  // const handleDelete = async post => {
-  //   await useAxios.delete('http://localhost:8080/deleteJobManager' + '/' + post.id);
-  //   const posts = this.state.posts.filter(p => p.id !== post.id);
-  //   this.setState({ posts });
-  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -135,8 +106,8 @@ export default function NewJobManager(props) {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-            <Button variant="contained" color="primary" size="large" fullWidth
-                className={classes.button} startIcon={<SaveIcon />} >
+            <Button variant="contained" color="primary" size="large" fullWidth 
+                className={classes.button} onClick={handleSubmit} startIcon={<SaveIcon />} >
                 Submit
             </Button>
             </Grid>
