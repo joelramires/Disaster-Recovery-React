@@ -49,7 +49,7 @@ async function handleDelete(id) {
     console.error(error);
   }
   console.log("deleted");
-  window.location.reload()
+  window.location.href = "http://localhost:3000/dashboard";
 }
 
   return (

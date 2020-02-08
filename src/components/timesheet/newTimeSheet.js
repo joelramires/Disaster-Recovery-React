@@ -237,7 +237,7 @@ export default function NewTimeSheet() {
             </Grid>
             <Grid item xs>
             <TextField variant="outlined" margin="normal" fullWidth 
-                            id="machineHour2" label="Hrs. Used" name="machineHour2" />
+                            id="machineHour2" label="Hrs. Used" name="machineHour2" onChange={handleInputChange}/>
             </Grid>
         </Grid>
 
