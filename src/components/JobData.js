@@ -41,6 +41,11 @@ export default function JobData(props) {
 if (loading) return <p>Loading...</p>
 if (error) return <p>Error!</p>
 
+async function handleChange(jid) {
+  localStorage.setItem("job", jid);
+}
+
+
 async function handleDelete(id) { 
   try {
     // console.log(useParams.id)
@@ -82,7 +87,8 @@ async function handleDelete(id) {
               <TableCell>{job.rateHourly}</TableCell>
               <TableCell>{job.maxHour}</TableCell>
               <TableCell>
-                <Tooltip id="tooltip-top"
+              <Link to={"/getJobManager/" +  job.jobId}>
+                <Tooltip id="tooltip-top" onMouseEnter={() => handleChange(job.jobId)}
                   title="Edit Task" placement="top">
                     <IconButton style={{color: purple[500]}} aria-label="Edit">
                       <Edit />
@@ -94,6 +100,7 @@ async function handleDelete(id) {
                     <Close />
                   </IconButton>
                 </Tooltip>
+                </Link>
               </TableCell>
             </TableRow>
           ))}

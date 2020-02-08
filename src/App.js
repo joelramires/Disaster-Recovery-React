@@ -13,6 +13,9 @@ import JobData  from './components/JobData';
 import JobWorkload from './components/jobmanager/newJobManager'
 import JobDataDelete from'./components/JobData';
 import MachineData from './components/MachineData';
+import editMachine from './components/machinemanager/editMachine';
+import editJob from './components/jobmanager/editJob';
+import userTimesheet from './components/userTimesheet';
 import axios from 'axios';
 import NotFound from "./components/notFound";
 
@@ -67,7 +70,10 @@ function App() {
       <Route path="/jobData/:id" exact component={JobDataDelete}></Route>
         <Route path="/newMachineManager" exact component={MachineManager}></Route>
         <Route path="/newJobManager" exact component={JobManager}></Route>
+        <Route path="/machineManager/:id" exact component={editMachine}></Route>
+        <Route path="/getJobManager/:id" exact component={editJob}></Route>
         <Route path="/timesheet" exact component={ApprovalTimesheet}></Route>
+        <Route path="/userTimesheet" exact component={userTimesheet}></Route>
         <Route path="/addtimesheet" exact component={AddTimeSheet}></Route>
         <Route path="/jobData" exact component={JobData}></Route>
         <Route path="/machineData" exact component={MachineData}></Route>

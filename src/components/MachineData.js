@@ -5,7 +5,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './title';
-import useAxios from 'axios-hooks'
+import useAxios from 'axios-hooks';
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
@@ -15,7 +15,7 @@ import { Grid } from '@material-ui/core';
 import { purple, red, deepOrange } from '@material-ui/core/colors';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import { withStyles } from "@material-ui/core/styles";
-import axios from 'axios'
+import axios from 'axios';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -37,6 +37,9 @@ export default function AdminData(props) {
 if (loading) return <p>Loading...</p>
 if (error) return <p>Error!</p>
 
+async function handleChange(mid) {
+  localStorage.setItem("machine", mid);
+}
 
 async function handleDelete(id) { 
   try {
@@ -76,12 +79,14 @@ async function handleDelete(id) {
               <TableCell>{machine.rate}</TableCell>
               <TableCell>{machine.maxHours}</TableCell>
               <TableCell>
+              <Link to={"/machineManager/" +  machine.id}>
                 <Tooltip id="tooltip-top"
-                  title="Edit Task" placement="top">
-                    <IconButton style={{ color: purple[500] }} aria-label="Edit">
+                  title="Edit Task" placement="top" onMouseEnter={() => handleChange(machine.id)}>
+                    <IconButton style={{ color: purple[500] }} aria-label="Edit" >
                       <Edit />
                     </IconButton>
                 </Tooltip>
+                </Link>
                 <Tooltip id="tooltip-top-start"
                 title="Remove" onClick={() => handleDelete(machine.id)} placement="top">
                   <IconButton color="secondary" aria-label="Close">
