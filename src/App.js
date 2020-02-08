@@ -10,12 +10,14 @@ import JobManager from './components/jobmanager/newJobManager';
 import MachineManager from './components/machinemanager/newMachineManager';
 import { UserProvider } from './components/useUser';
 import JobData  from './components/JobData';
+import JobWorkload from './components/jobmanager/newJobManager'
 import JobDataDelete from'./components/JobData';
 import MachineData from './components/MachineData';
 import editMachine from './components/machinemanager/editMachine';
 import editJob from './components/jobmanager/editJob';
 import userTimesheet from './components/userTimesheet';
 import axios from 'axios';
+import NotFound from "./components/notFound";
 
 export const AuthContext = React.createContext();
 
@@ -78,8 +80,9 @@ function App() {
         <Route path="/dashboard" exact component={Dashboard}></Route>
         <Route path="/signup" exact component={SignUp}></Route>
         <Route path="/signin" exact component={SignInSide}></Route>
+        <Route path="/not-found" component={NotFound}></Route>
         <Route path="/" exact component={HomePage}></Route>
-            {/* <Redirect to ="/not-found" /> */}
+        <Redirect to ="/not-found" />
       </Switch>
 
     </div>

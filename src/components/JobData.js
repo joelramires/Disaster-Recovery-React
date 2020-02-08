@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -45,18 +45,20 @@ async function handleChange(jid) {
   localStorage.setItem("job", jid);
 }
 
+
 async function handleDelete(id) { 
   try {
     // console.log(useParams.id)
     await axios.delete(`http://localhost:8080/deleteJobManager/${id}`); 
     props.push("/jobData"); 
+
   } catch(error) {
     console.error(error);
+    
   }
   console.log("deleted");
   window.location.reload()
 }
-// const apiUrl = "http://localhost:8080/deleteJobManager/" + props.match.params.id;
 
   return (
     <React.Fragment>      
