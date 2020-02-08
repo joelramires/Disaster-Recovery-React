@@ -84,7 +84,7 @@ async function handleDelete(id) {
               <TableCell>
                 <Tooltip id="tooltip-top"
                   title="Edit Task" placement="top">
-                    <IconButton style={{ color: purple[500] }} aria-label="Edit">
+                    <IconButton style={{color: purple[500]}} aria-label="Edit">
                       <Edit />
                     </IconButton>
                 </Tooltip>

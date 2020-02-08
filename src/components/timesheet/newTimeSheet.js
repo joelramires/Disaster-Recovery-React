@@ -18,6 +18,8 @@ import Copyright from '../Media/copyright';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // import GridItem from '../Grid/GridItem';
+import useAxios from 'axios-hooks';
+import axios from 'axios';
 
 
 const useStyles = makeStyles(theme => ({
@@ -41,33 +43,68 @@ const useStyles = makeStyles(theme => ({
 
 export default function NewTimeSheet() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [laborCode, setlaborCode] = React.useState("");
-  const [laborCode1, setlaborCode1] = React.useState("");
-  const [laborCode2, setlaborCode2] = React.useState("");
+  const initialState = {
+    username:localStorage.getItem("username"),
+    siteCode:"",
+    date:"2020-02-04",
+    jobCode1:"",
+    jobHour1:"",
+    machineCode1:"",
+    machineHour1:"",
+    jobCode2:"",
+    jobHour2:"",
+    machineCode2:"",
+    machineHour2:"",
+    jobCode3:"",
+    jobHour3:"",
+    machineCode3:"",
+    machineHour3:"",
+  }
 
-  const [machineCode, setMachineCode] = React.useState("");
-  const handleChange = event => {
-    setlaborCode(event.target.value);
-    setlaborCode1(event.target.value);
-    setlaborCode2(event.target.value);
+  var[{data,loading, error}]=useAxios(
+    'http://localhost:8080/jobManager'
+    )
+  
+    const jobCode = data;
 
-  };
+  [{data,loading, error}]=useAxios(
+      'http://localhost:8080/machineManager'
+      )
+    
+      const machineCode = data;
+    var setData = "";
+   [data, setData] = React.useState(initialState);
+    const handleInputChange = event => {
+        setData({
+          ...data,
+          [event.target.name]: event.target.value
+        });
+        console.log(data)
+      };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+      const handleFormSubmit = event => {
+        console.log("handleFormSubmit");
+          event.preventDefault();
+          setData({
+            ...data,
+            isSubmitting: true,
+            errorMessage: null
+          });
+          var dataJson = data;
+          axios.post("http://localhost:8080/newTimeSheet", dataJson)
+          .then(
+            window.location.href = "http://localhost:3000/timesheet"
+          ) 
+        };
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
   return (
     <div id="maindiv">
+      <React.Fragment>
       <Container component="main" maxWidth="lg">
       <CssBaseline />
       <div className={classes.paper}>
       
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleFormSubmit}>
         
         <Grid container id="timeSheetEntry">
           <Grid container> 
@@ -80,17 +117,17 @@ export default function NewTimeSheet() {
             <Grid item xs >
             <TextField variant="outlined" margin="normal"
                                 required fullWidth autoFocus
-                                id="siteCode" label="Site Code" name="text" />
+                                id="siteCode" label="Site Code" name="siteCode" onChange={handleInputChange}/>
             </Grid>
-            <Grid item xs>
+            {/* <Grid item xs>
             <TextField variant="outlined" margin="normal"
                             required fullWidth 
                             id="contractorName" label="Contractor Name" name="text" />
-            </Grid>
+            </Grid> */}
             <Grid item xs>
-            <TextField id="date" label="Date" type="date"
+            <TextField id="date" label="Date" type="date" name="date"
                             defaultValue="2020-02-04" className={classes.textField}
-                            InputLabelProps={{shrink: true,}} />
+                            InputLabelProps={{shrink: true,}} onChange={handleInputChange}/>
             </Grid>
         </Grid>
         </Grid>
@@ -109,20 +146,16 @@ export default function NewTimeSheet() {
                                 id="laborCode" label="Labor Code" name="text" /> */}
               <FormControl className={classes.formControl}  >
                 <InputLabel id="select-label">Labor Code</InputLabel>
-                <Select labelId="laborCode" id="laborCode" open={open}
-                  onClose={handleClose} onOpen={handleOpen}
-                  value={laborCode} onChange={handleChange}>
-                  <MenuItem value=""></MenuItem>                  
+                <Select labelId="laborCode" id="jobCode1" name="jobCode1" onChange={handleInputChange}>
+                  {jobCode && jobCode.map( code => (
+                    <MenuItem value={code.jobCode}>{code.jobCode}</MenuItem>  
+                  ) )}                
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
-                            id="workedHours" label="Hrs. Worked" name="text" />
-            </Grid>
-            <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
-                            id="total" label="Total" name="text" />
+            <TextField type="number" variant="outlined" margin="normal" fullWidth
+                            id="jobHour1" label="Hrs. Worked" name="jobHour1" onChange={handleInputChange}/>
             </Grid>
         </Grid>
 
@@ -131,20 +164,16 @@ export default function NewTimeSheet() {
             <Grid item xs>
               <FormControl className={classes.formControl}  >
                 <InputLabel id="select-label">Labor Code</InputLabel>
-                <Select labelId="laborCode1" id="laborCode1" open={open}
-                  onClose={handleClose} onOpen={handleOpen}
-                  value={laborCode1} onChange={handleChange}>
-                  <MenuItem value=""></MenuItem>                  
+                <Select labelId="laborCode1" id="jobCode2" name="jobCode2" onChange={handleInputChange}>
+                {jobCode && jobCode.map( code => (
+                    <MenuItem value={code.jobCode}>{code.jobCode}</MenuItem>  
+                  ) )}            
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
-                            id="workedHours" label="Hrs. Worked" name="text" />
-            </Grid>
-            <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
-                            id="total" label="Total" name="text" />
+            <TextField type="number" variant="outlined" margin="normal" fullWidth 
+                            id="jobHour2" label="Hrs. Worked" name="jobHour2" onChange={handleInputChange}/>
             </Grid>
         </Grid>
 
@@ -153,20 +182,16 @@ export default function NewTimeSheet() {
             <Grid item xs>
               <FormControl className={classes.formControl}  >
                 <InputLabel id="select-label">Labor Code</InputLabel>
-                <Select labelId="laborCode2" id="laborCode2" open={open}
-                  onClose={handleClose} onOpen={handleOpen}
-                  value={laborCode2} onChange={handleChange}>
-                  <MenuItem value=""></MenuItem>                  
+                <Select labelId="laborCode2" id="jobCode3" name="jobCode3" onChange={handleInputChange}>
+                {jobCode && jobCode.map( code => (
+                    <MenuItem value={code.jobCode}>{code.jobCode}</MenuItem>  
+                  ) )}       
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs>
             <TextField variant="outlined" margin="normal" fullWidth 
-                            id="workedHours" label="Hrs. Worked" name="text" />
-            </Grid>
-            <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
-                            id="total" label="Total" name="text" />
+                            id="jobHour3" label="Hrs. Worked" name="jobHour3" onChange={handleInputChange}/>
             </Grid>
         </Grid>
       </Grid> 
@@ -186,20 +211,16 @@ export default function NewTimeSheet() {
 
             <FormControl className={classes.formControl} id="machinecode" >
                 <InputLabel id="select-label" >Machine Code</InputLabel>
-                <Select labelId="machineCode" id="machineCode" open={open}
-                  onClose={handleClose} onOpen={handleOpen}
-                  value={machineCode} onChange={handleChange}>
-                  <MenuItem value=""></MenuItem>                  
+                <Select labelId="machineCode" id="machineCode1" name="machineCode1" onChange={handleInputChange}>
+                {machineCode && machineCode.map( code => (
+                    <MenuItem value={code.machineCode}>{code.machineCode}</MenuItem>  
+                  ) )}               
                 </Select>
             </FormControl>
             </Grid>
             <Grid item xs>
             <TextField variant="outlined" margin="normal" fullWidth 
-                            id="usedHours" label="Hrs. Used" name="text" />
-            </Grid>
-            <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
-                            id="total" label="Total" name="text" />
+                            id="machineHour1" label="Hrs. Used" name="machineHour1" onChange={handleInputChange}/>
             </Grid>
         </Grid>
 
@@ -208,20 +229,16 @@ export default function NewTimeSheet() {
         <Grid item xs>
         <FormControl className={classes.formControl} id="machinecode" >
                 <InputLabel id="select-label">Machine Code</InputLabel>
-                <Select labelId="machineCode" id="machineCode" open={open}
-                  onClose={handleClose} onOpen={handleOpen}
-                  value={machineCode} onChange={handleChange}>
-                  <MenuItem value=""></MenuItem>                  
+                <Select labelId="machineCode" id="machineCode2" name="machineCode2" onChange={handleInputChange}>
+                {machineCode && machineCode.map( code => (
+                    <MenuItem value={code.machineCode}>{code.machineCode}</MenuItem>  
+                  ) )}             
                 </Select>
             </FormControl>
             </Grid>
             <Grid item xs>
             <TextField variant="outlined" margin="normal" fullWidth 
-                            id="usedHours" label="Hrs. Used" name="text" />
-            </Grid>
-            <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
-                            id="total" label="Total" name="text" />
+                            id="machineHour2" label="Hrs. Used" name="machineHour2" />
             </Grid>
         </Grid>
 
@@ -230,20 +247,16 @@ export default function NewTimeSheet() {
         <Grid item xs>
         <FormControl className={classes.formControl} id="machinecode" >
                 <InputLabel id="select-label">Machine Code</InputLabel>
-                <Select labelId="machineCode" id="machineCode" open={open}
-                  onClose={handleClose} onOpen={handleOpen}
-                  value={machineCode} onChange={handleChange}>
-                  <MenuItem value=""></MenuItem>                  
+                <Select labelId="machineCode" id="machineCode3" name="machineCode3" onChange={handleInputChange}>
+                {machineCode && machineCode.map( code => (
+                    <MenuItem value={code.machineCode}>{code.machineCode}</MenuItem>  
+                  ) )}            
                 </Select>
             </FormControl>
             </Grid>
             <Grid item xs>
             <TextField variant="outlined" margin="normal" fullWidth 
-                            id="usedHours" label="Hrs. Used" name="text" />
-            </Grid>
-            <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
-                            id="total" label="Total" name="text" />
+                            id="machineHour3" label="Hrs. Used" name="machineHour3" onChange={handleInputChange}/>
             </Grid>
         </Grid>
       </Grid>                      
@@ -258,7 +271,7 @@ export default function NewTimeSheet() {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-            <Button variant="contained" color="primary" size="large" fullWidth
+            <Button type="submit" variant="contained" color="primary" size="large" fullWidth
                 className={classes.button} startIcon={<SaveIcon />} >
                 Submit
             </Button>
@@ -268,13 +281,14 @@ export default function NewTimeSheet() {
             <Copyright />
           </Box>                      
 
-            <Grid container></Grid>
+            <Grid container>
+
+            </Grid>
             
-            
-          
-        </form>
+      </form>
       </div>
     </Container>
-    </div>
+    </React.Fragment>
+  </div>
   );
 }

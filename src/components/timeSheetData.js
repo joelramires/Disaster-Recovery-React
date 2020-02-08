@@ -51,12 +51,9 @@ async function handleApproval(id) {
 
   return (
     <React.Fragment>      
-      <Title>Machine Code Management</Title>
+      <Title>Time Sheet Approval</Title>
       <Grid container>
         <Grid item xs={10}></Grid>
-        <Grid xs={2} margin-left="auto">
-        <Link to="/newMachineManager" className="btn btn-success btn-md mb-3" role="button" aria-pressed="true"><PlaylistAddIcon/> Create New</Link>
-        </Grid>
       </Grid>
       <Table size="small">        
         <TableHead>          
@@ -76,7 +73,7 @@ async function handleApproval(id) {
               <TableCell>{timeSheet.siteCode}</TableCell>
               <TableCell>{timeSheet.totalAmount}</TableCell>
               <TableCell>{timeSheet.creatDate}</TableCell>
-              <TableCell>{timeSheet.Hours}</TableCell>
+              <TableCell>{timeSheet.hours}</TableCell>
               <TableCell>{timeSheet.user_name}</TableCell>
               <TableCell>{timeSheet.status}</TableCell>
               <TableCell>
