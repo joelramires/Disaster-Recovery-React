@@ -50,14 +50,13 @@ async function handleDelete(id) {
   try {
     // console.log(useParams.id)
     await axios.delete(`http://localhost:8080/deleteJobManager/${id}`); 
-    props.push("/jobData"); 
 
   } catch(error) {
     console.error(error);
     
   }
   console.log("deleted");
-  window.location.reload()
+  window.location.href = "http://localhost:3000/dashboard"
 }
 
   return (
