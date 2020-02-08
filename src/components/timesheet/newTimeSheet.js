@@ -44,7 +44,6 @@ const useStyles = makeStyles(theme => ({
 export default function NewTimeSheet() {
   const classes = useStyles();
   const initialState = {
-    username:localStorage.getItem("username"),
     siteCode:"",
     date:"2020-02-04",
     jobCode1:"",
