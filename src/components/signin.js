@@ -67,37 +67,6 @@ export const SignInSide = (props) => {
   const classes = useStyles();
   const { classes1 } = props;
   
-
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const { setAccessToken } = useUser();
-
-  
-  
- 
-
- 
-
-  // function handleEmailChange(event) {
-  //   setEmail(event.target.value);
-  // }
- 
-  // function handlePasswordChange(event) {
-  //   setPassword(event.target.value);
-  // }
- 
-  // function handleFormSubmit(event) {
-  //   event.preventDefault();
-    
-  //   // fetch("https://localhost:8080/login")
-  //   //   .then(res => res.json())
-  //   //   .then(res => this.setState({ token: res }))
-  //   //   .catch(() => this.setState({ hasErrors: true }));
-  //   // Fetch the accessToken from the server
-  //   // setAccessToken(JSON.stringify(token));
-  //   setAccessToken('awesomeAccessToken123456789');
-  // }
-  
   const handleFormSubmit = event => {
     console.log("handleFormSubmit");
       event.preventDefault();
@@ -129,12 +98,14 @@ export const SignInSide = (props) => {
           console.log(decoded);
           localStorage.setItem("username", decoded.sub)
           localStorage.setItem("Author", decoded.authorities)
-          window.location.href = "http://localhost:3000/dashboard"
-          // localStorage.setItem("Author", decoded.)
-          // dispatch({
-          //     type: "LOGIN",
-          //     payload: resJson
-          // })
+
+          if(localStorage.getItem("Author") === "admin,"){
+            window.location.href = "http://localhost:3000/dashboard"
+          }
+          else{
+            window.location.href = "http://localhost:3000/dashboardUser"
+          }
+          
         })
         .catch(error => {
           setData({

@@ -1,6 +1,7 @@
 import React from 'react';
 import SignInSide from './components/signin'
 import Dashboard from './components/dashboard';
+import DashboardUser from './components/dashboardUser';
 import SignUp from './components/signup';
 import AddTimeSheet from './components/timesheet/newTimeSheet';
 import ApprovalTimesheet from './components/timeSheetData'
@@ -78,6 +79,7 @@ function App() {
         <Route path="/jobData" exact component={JobData}></Route>
         <Route path="/machineData" exact component={MachineData}></Route>
         <Route path="/dashboard" exact component={Dashboard}></Route>
+        <Route path="/dashboardUser" exact component={DashboardUser}></Route>
         <Route path="/signup" exact component={SignUp}></Route>
         <Route path="/signin" exact component={SignInSide}></Route>
         <Route path="/not-found" component={NotFound}></Route>

@@ -4,30 +4,30 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Container from "@material-ui/core/Container";
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Title from './title';
 import useAxios from 'axios-hooks'
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
-import { Link } from "react-router-dom";
 import { Grid } from '@material-ui/core';
-import { purple, red, deepOrange } from '@material-ui/core/colors';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import axios from 'axios'
 
 const StyledTableCell = withStyles(theme => ({
+  // root: {
+  //   display: 'flex',
+  // },
   head: {
     // backgroundColor: "#e1bee7",
     color: "#e64a19",
     height: "80px",
-    fontSize: 22
+    fontSize: 18
   },
   body: {
     fontSize: 14
   }
 }))(TableCell);
+
 
 export default function TimeSheetData(props) {
   const[{data,loading, error}]=useAxios(
@@ -39,7 +39,8 @@ if (loading) return <p>Loading...</p>
 if (error) return <p>Error!</p>
 
   return (
-    <React.Fragment>      
+    <React.Fragment>   
+      <Container component="main" maxWidth="lg">
       <Title>Time Sheet Approval</Title>
       <Grid container>
         <Grid item xs={10}></Grid>
@@ -69,6 +70,7 @@ if (error) return <p>Error!</p>
         }
         </TableBody>
       </Table>
+      </Container>
     </React.Fragment>
   );
 }

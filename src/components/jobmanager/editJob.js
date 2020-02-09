@@ -14,8 +14,12 @@ import Copyright from '../Media/copyright';
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
 import useAxios from 'axios-hooks';
+import Navbar from '../Navbar';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+  },
     paper: {
       marginTop: theme.spacing(8),
       display: 'flex',
@@ -79,7 +83,11 @@ export default function EditJobManager() {
     };
 
   return (
-    
+    <React.Fragment>
+    <div className={classes.root}>
+    <CssBaseline />
+    <Navbar />
+    <main className={classes.content}></main>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -138,6 +146,7 @@ export default function EditJobManager() {
       </div>
       
     </Container>
-
+</div>
+</React.Fragment>
   );
 }

@@ -4,6 +4,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Title from './title';
 import useAxios from 'axios-hooks'
 import Tooltip from "@material-ui/core/Tooltip";
@@ -16,20 +19,37 @@ import { purple, red, deepOrange } from '@material-ui/core/colors';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import { withStyles } from "@material-ui/core/styles";
 import axios from 'axios'
+import Navbar from './Navbar';
 
 const StyledTableCell = withStyles(theme => ({
+  // root: {
+  //   display: 'flex',
+  // },
   head: {
     // backgroundColor: "#e1bee7",
     color: "#e64a19",
     height: "80px",
-    fontSize: 22
+    fontSize: 24
   },
   body: {
-    fontSize: 14
+    fontSize: 24,
   }
 }))(TableCell);
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+}));
+
 export default function TimeSheetData(props) {
+  const classes = useStyles();
   const[{data,loading, error}]=useAxios(
   'http://localhost:8080/timeSheet'
   )
@@ -50,10 +70,17 @@ async function handleApproval(id) {
 }
 
   return (
-    <React.Fragment>      
+    <React.Fragment> 
+    <div className={classes.root}>
+    <CssBaseline />
+    <Navbar />
+    <main className={classes.content}></main> 
+    <Container component="main" maxWidth="lg" > 
+    <CssBaseline /> 
+    <div className={classes.paper}>
       <Title>Time Sheet Approval</Title>
       <Grid container>
-        <Grid item xs={10}></Grid>
+        <Grid item xs={12}></Grid>
       </Grid>
       <Table size="small">        
         <TableHead>          
@@ -90,6 +117,9 @@ async function handleApproval(id) {
         }
         </TableBody>
       </Table>
+      </div>
+      </Container>  
+      </div>
     </React.Fragment>
   );
 }

@@ -20,9 +20,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // import GridItem from '../Grid/GridItem';
 import useAxios from 'axios-hooks';
 import axios from 'axios';
+import NavbarUser from '../NavbarUser';
 
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
@@ -99,6 +103,10 @@ export default function NewTimeSheet() {
   return (
     <div id="maindiv">
       <React.Fragment>
+      <div className={classes.root}>
+    <CssBaseline />
+    <NavbarUser />
+    <main className={classes.content}></main>
       <Container component="main" maxWidth="lg">
       <CssBaseline />
       <div className={classes.paper}>
@@ -287,6 +295,7 @@ export default function NewTimeSheet() {
       </form>
       </div>
     </Container>
+    </div>
     </React.Fragment>
   </div>
   );
