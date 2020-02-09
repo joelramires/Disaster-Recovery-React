@@ -48,7 +48,6 @@ const useStyles = makeStyles(theme => ({
 export default function SignUp() {
   const classes = useStyles();
   // const [role, setrole] = React.useState('');
-  const [open, setOpen] = React.useState(false);
 
   const initialState = React.useState({
     firstName: "",
@@ -66,12 +65,26 @@ export default function SignUp() {
     });
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleInputChangeRole = event => {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value,
+    });
+    console.log(data.role)
   };
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleFormSubmit = event => {
+    console.log("handleFormSubmit");
+      event.preventDefault();
+      setData({
+        ...data,
+        isSubmitting: true,
+        errorMessage: null
+      });
+      axios.post("http://localhost:8080/newUser", data)
+      .then(
+        window.location.href = "http://localhost:3000/signin"
+      )
   };
 
   const handleFormSubmit = event => {
@@ -123,18 +136,16 @@ export default function SignUp() {
             type="password" id="password" autoComplete="current-password"
             value={data.password} onChange={handleInputChange} />
           <div>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-controlled-open-select-label">Role</InputLabel>
-              <Select
-                labelId="roleLabel" id="role" open={open}
-                onClose={handleClose} onOpen={handleOpen}
-                value={data.role} onChange={handleInputChange}>
-                <MenuItem value=""></MenuItem>
-                <MenuItem value={1}>Admin</MenuItem>
-                <MenuItem value={2}>Contractor</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-controlled-open-select-label">Role</InputLabel>
+        <Select
+          labelId="roleLabel" id="role" name="role"
+          value={data.role} onChange={handleInputChangeRole}>
+          <MenuItem value="admin">admin</MenuItem>
+          <MenuItem value="contractor">contractor</MenuItem>
+        </Select>
+      </FormControl>
+    </div>
           <Button
             type="submit"
             fullWidth

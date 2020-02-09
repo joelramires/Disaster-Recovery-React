@@ -110,7 +110,7 @@ export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const user = localStorage.getItem("username");
-  const author = localStorage.getItem("Author");
+  const author = localStorage.getItem("Author").substr(0, localStorage.getItem("Author").length - 1);;
 
   function logout() {
     localStorage.removeItem("token")
