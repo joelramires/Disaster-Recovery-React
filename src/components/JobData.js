@@ -50,10 +50,8 @@ async function handleDelete(id) {
   try {
     // console.log(useParams.id)
     await axios.delete(`http://localhost:8080/deleteJobManager/${id}`); 
-
   } catch(error) {
     console.error(error);
-    
   }
   console.log("deleted");
   window.location.href = "http://localhost:3000/dashboard"
@@ -93,13 +91,13 @@ async function handleDelete(id) {
                       <Edit />
                     </IconButton>
                 </Tooltip>
+                </Link>
                 <Tooltip id="tooltip-top-start"
                 title="Remove" onClick={() => handleDelete(job.jobId)} placement="top">
                   <IconButton color="secondary" aria-label="Close">
                     <Close />
                   </IconButton>
                 </Tooltip>
-                </Link>
               </TableCell>
             </TableRow>
           ))}
