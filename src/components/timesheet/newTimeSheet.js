@@ -96,7 +96,7 @@ export default function NewTimeSheet() {
           var dataJson = data;
           axios.post("http://localhost:8080/newTimeSheet", dataJson)
           .then(
-            window.location.href = "http://localhost:3000/timesheet"
+            window.location.href = "http://localhost:3000/dashboardUser"
           ) 
         };
 
