@@ -16,6 +16,7 @@ import { purple, red, deepOrange } from '@material-ui/core/colors';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import { withStyles } from "@material-ui/core/styles";
 import axios from 'axios'
+import contractorNewTimesheet from './contractorNewTimesheet'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -40,9 +41,12 @@ if (error) return <p>Error!</p>
 
   return (
     <React.Fragment>      
-      <Title>Time Sheet Approval</Title>
+      <Title>Time Sheet Submission</Title>
       <Grid container>
         <Grid item xs={10}></Grid>
+        <Grid xs={2} margin-left="auto">
+        <Link to="/contractorNewTimesheet" className="btn btn-success btn-md mb-3" role="button" aria-pressed="true"><PlaylistAddIcon/> Create New</Link>
+        </Grid>
       </Grid>
       <Table size="small">        
         <TableHead>          

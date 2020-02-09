@@ -14,7 +14,7 @@ export const mainListItems = (
         <PeopleAltIcon />
       </ListItemIcon>
       <ListItemText >
-      <Link to="/jobData" >Job Management</Link>
+      <Link to="/adminJobData" >Job Management</Link>
       </ListItemText>
     </ListItem>
     <ListItem button>
@@ -22,14 +22,14 @@ export const mainListItems = (
         <CommuteIcon />
       </ListItemIcon>
       {/* <ListItemText primary="Machine Management" /> */}
-      <Link to="/machineData" >Machine Management</Link>
+      <Link to="/adminMachineData" >Machine Management</Link>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <BallotIcon />
       </ListItemIcon>
       {/* <ListItemText primary="Timecard Approval" /> */}
-      <Link to="/timesheet" >Timecard Approval</Link>
+      <Link to="/adminTimeSheet" >Timecard Approval</Link>
     </ListItem>
     
   </div>

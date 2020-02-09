@@ -205,13 +205,7 @@ export const SignInSide = (props) => {
               <span className="form-error">{data.errorMessage}</span>
             )}
 
-           <button disabled={data.isSubmitting}>
-              {data.isSubmitting ? (
-                "Loading..."
-              ) : (
-                "Login"
-              )}
-            </button>
+          
 
             <Grid container>
               <Grid item xs>

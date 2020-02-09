@@ -15,11 +15,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems } from './listItem';
 import PersonIcon from '@material-ui/icons/Person';
-import JobCodeTable from './JobData';
 import Copyright from './Media/copyright';
 import Box from '@material-ui/core/Box';
 import MemoryIcon from '@material-ui/icons/Memory';
   import { Link } from "react-router-dom";
+  import MachineCodeTable from './MachineData';
 
 
 const drawerWidth = 260;
@@ -170,11 +170,9 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                {/* <JobTable /> */}
-                <JobCodeTable />        
+              <MachineCodeTable />
               </Paper>
             </Grid>
             <Box mt={5} ml={50}>

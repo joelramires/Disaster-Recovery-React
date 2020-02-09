@@ -58,7 +58,7 @@ async function handleDelete(id) {
       <Grid container>
         <Grid item xs={10}></Grid>
         <Grid xs={2} margin-left="auto">
-        <Link to="/newMachineManager" className="btn btn-success btn-md mb-3" role="button" aria-pressed="true"><PlaylistAddIcon/> Create New</Link>
+        <Link to="/adminNewMachineManager" className="btn btn-success btn-md mb-3" role="button" aria-pressed="true"><PlaylistAddIcon/> Create New</Link>
         </Grid>
       </Grid>
       <Table size="small">        

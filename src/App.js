@@ -8,9 +8,7 @@ import { Switch,Route,Redirect } from "react-router-dom";
 import HomePage from './components/homePage'
 import JobManager from './components/jobmanager/newJobManager';
 import MachineManager from './components/machinemanager/newMachineManager';
-import { UserProvider } from './components/useUser';
 import JobData  from './components/JobData';
-import JobWorkload from './components/jobmanager/newJobManager'
 import JobDataDelete from'./components/JobData';
 import MachineData from './components/MachineData';
 import editMachine from './components/machinemanager/editMachine';
@@ -18,6 +16,13 @@ import editJob from './components/jobmanager/editJob';
 import userTimesheet from './components/userTimesheet';
 import axios from 'axios';
 import NotFound from "./components/notFound";
+import contractorDashboard from './components/contractorDashboard'
+import contractorNewTimesheet from './components/contractorNewTimesheet'
+import adminJobData from './components/adminJobData'
+import adminMachineData from './components/adminMachineData'
+import adminTimeSheet from './components/adminTimeSheet'
+import adminNewJobManager from './components/adminNewJobManager'
+import adminNewMachineManager from './components/adminNewMachineManager'
 
 export const AuthContext = React.createContext();
 
@@ -77,6 +82,13 @@ function App() {
         <Route path="/addtimesheet" exact component={AddTimeSheet}></Route>
         <Route path="/jobData" exact component={JobData}></Route>
         <Route path="/machineData" exact component={MachineData}></Route>
+        <Route path="/contractorDashboard" exact component={contractorDashboard}></Route>
+        <Route path="/contractorNewTimesheet" exact component={contractorNewTimesheet}></Route>
+        <Route path="/adminJobData" exact component={adminJobData}></Route>
+        <Route path="/adminMachineData" exact component={adminMachineData}></Route>
+        <Route path="/adminTimeSheet" exact component={adminTimeSheet}></Route>
+        <Route path="/adminNewJobManager" exact component={adminNewJobManager}></Route>
+        <Route path="/adminNewMachineManager" exact component={adminNewMachineManager}></Route>
         <Route path="/dashboard" exact component={Dashboard}></Route>
         <Route path="/signup" exact component={SignUp}></Route>
         <Route path="/signin" exact component={SignInSide}></Route>

@@ -170,11 +170,9 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                {/* <JobTable /> */}
-                <JobCodeTable />        
+              <JobCodeTable />
               </Paper>
             </Grid>
             <Box mt={5} ml={50}>

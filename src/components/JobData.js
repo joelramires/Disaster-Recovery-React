@@ -13,7 +13,6 @@ import useAxios from 'axios-hooks'
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import { Grid } from '@material-ui/core';
-import { useParams } from "react-router"
 import { purple } from '@material-ui/core/colors';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import { withStyles } from "@material-ui/core/styles";
@@ -65,7 +64,7 @@ async function handleDelete(id) {
       <Grid container>
         <Grid item xs={10}></Grid>
         <Grid xs={2} margin-left="auto">
-        <Link to="/newJobManager" className="btn btn-success btn-md mb-3" role="button" aria-pressed="true"><PlaylistAddIcon/> Create New</Link>
+        <Link to="/adminNewJobManager" className="btn btn-success btn-md mb-3" role="button" aria-pressed="true"><PlaylistAddIcon/> Create New</Link>
         </Grid>
       </Grid>
       <Table size="small">        

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,13 +14,15 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems } from './listItem';
 import PersonIcon from '@material-ui/icons/Person';
-import JobCodeTable from './JobData';
+import UserTimesheet from './userTimesheet'
 import Copyright from './Media/copyright';
 import Box from '@material-ui/core/Box';
 import MemoryIcon from '@material-ui/icons/Memory';
+
   import { Link } from "react-router-dom";
+
+import { contractorListItems } from './listItemContractor';
 
 
 const drawerWidth = 260;
@@ -163,18 +166,16 @@ export default function Dashboard() {
             <ChevronLeftIcon />
           </IconButton>
         </div>       
-        <List>{mainListItems}</List>
+        <List>{contractorListItems}</List>
         
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                {/* <JobTable /> */}
-                <JobCodeTable />        
+              <UserTimesheet/>
               </Paper>
             </Grid>
             <Box mt={5} ml={50}>

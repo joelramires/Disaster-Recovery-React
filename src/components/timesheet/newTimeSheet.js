@@ -14,8 +14,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import SaveIcon from '@material-ui/icons/Save';
-import Copyright from '../Media/copyright';
-import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // import GridItem from '../Grid/GridItem';
 import useAxios from 'axios-hooks';
@@ -276,10 +274,7 @@ export default function NewTimeSheet() {
             </Button>
             </Grid>
       </Grid>     
-          <Box mt={5}>
-            <Copyright />
-          </Box>                      
-
+         
             <Grid container>
 
             </Grid>

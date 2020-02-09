@@ -15,7 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems } from './listItem';
 import PersonIcon from '@material-ui/icons/Person';
-import JobCodeTable from './JobData';
+import NewMachineManager from '../components/machinemanager/newMachineManager';
 import Copyright from './Media/copyright';
 import Box from '@material-ui/core/Box';
 import MemoryIcon from '@material-ui/icons/Memory';
@@ -174,7 +174,7 @@ export default function Dashboard() {
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 {/* <JobTable /> */}
-                <JobCodeTable />        
+                <NewMachineManager />        
               </Paper>
             </Grid>
             <Box mt={5} ml={50}>

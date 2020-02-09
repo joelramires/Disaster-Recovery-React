@@ -9,11 +9,8 @@ import useAxios from 'axios-hooks'
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
-import { Link } from "react-router-dom";
 import { Grid } from '@material-ui/core';
-import { purple, red, deepOrange } from '@material-ui/core/colors';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+import { purple} from '@material-ui/core/colors';
 import { withStyles } from "@material-ui/core/styles";
 import axios from 'axios'
 
