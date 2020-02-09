@@ -128,61 +128,34 @@ export const SignInSide = (props) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-          Disaster Recovery
+          Disaster Recovery Sign In
           </Typography>
           <form className={classes.form} noValidate onSubmit={handleFormSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={handleInputChange}
-              value={data.email}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
+            <TextField  variant="outlined"  margin="normal"
+              required fullWidth id="email" label="Email Address"
+              name="email" autoComplete="email" autoFocus
+              onChange={handleInputChange} value={data.email} />
+            
+            <TextField variant="outlined" margin="normal"
+              required fullWidth name="password"
+              label="Password" type="password" id="password"
               autoComplete="current-password"
-              onChange={handleInputChange}
-              value={data.password}
-            />
-           
-            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} >Sign In       
-            {/* <Link to="/dashboard" role="button" color="inherit" aria-pressed="true">Sign In</Link> */}
-            {/* <Link to="Dashboard">Sign In</Link> */}
-            </Button>
+              onChange={handleInputChange} value={data.password} />
 
-            {/* <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button> */}
+            <Button type="submit" fullWidth variant="contained" 
+              color="primary" className={classes.submit} >Sign In </Button>
+
             {data.errorMessage && (
               <span className="form-error">{data.errorMessage}</span>
             )}
 
-           <button disabled={data.isSubmitting}>
+           {/* <button disabled={data.isSubmitting}>
               {data.isSubmitting ? (
                 "Loading..."
               ) : (
                 "Login"
               )}
-            </button>
+            </button> */}
 
             <Grid container>
               <Grid item xs>

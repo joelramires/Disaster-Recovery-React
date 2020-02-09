@@ -87,6 +87,20 @@ export default function SignUp() {
       )
   };
 
+  const handleFormSubmit = event => {
+    console.log("handleFormSubmit");
+      event.preventDefault();
+      setData({
+        ...data,
+        isSubmitting: true,
+        errorMessage: null
+      });
+      axios.post("http://localhost:8080/newUser", data)
+      // .then(
+      //   window.location.href = "http://localhost:3000/signin"
+      // )
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -95,7 +109,7 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+        Disaster Recovery Sign Up
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleFormSubmit} >
         <TextField
@@ -122,7 +136,6 @@ export default function SignUp() {
             type="password" id="password" autoComplete="current-password"
             value={data.password} onChange={handleInputChange} />
           <div>
-     
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-controlled-open-select-label">Role</InputLabel>
         <Select
@@ -142,14 +155,13 @@ export default function SignUp() {
           >
             Create User
           </Button>
-          <Grid container>
-            
-          </Grid>
-        </form>
-      </div>
-      <Box mt={5}>
+          <Grid container></Grid>
+          <Box mt={5}>
         <Copyright />
       </Box>
+        </form>
+      </div>
+      
     </Container>
   );
 }

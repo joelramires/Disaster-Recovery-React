@@ -20,7 +20,6 @@ import axios from 'axios'
 // import GridItem from '../Grid/GridItem';
 import Navbar from '../Navbar';
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
