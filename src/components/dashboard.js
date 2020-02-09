@@ -115,6 +115,7 @@ export default function Dashboard() {
   function logout() {
     localStorage.removeItem("token")
     localStorage.removeItem("username")
+    localStorage.removeItem("Author")
   }
 
   const handleDrawerOpen = () => {
