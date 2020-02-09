@@ -11,17 +11,18 @@ export const mainListItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
-        <BallotIcon />
+        <PeopleAltIcon />
       </ListItemIcon>
-      {/* <ListItemText primary="Timecard Approval" /> */}
-      <Link to="/timesheet" >Timecard Approval</Link>
+      <ListItemText >
+      <Link to="/dashboardUser" >Display TimeSheet</Link>
+      </ListItemText>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <PeopleAltIcon />
+        <CommuteIcon />
       </ListItemIcon>
-      {/* <ListItemText primary="Timecard Approval" /> */}
-      <Link to="/dashboard" >Dashboard</Link>
+      {/* <ListItemText primary="Machine Management" /> */}
+      <Link to="/addtimesheet" >Create TimeSheet</Link>
     </ListItem>
     
   </div>

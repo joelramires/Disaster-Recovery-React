@@ -66,7 +66,7 @@ export const SignInSide = (props) => {
   };
   const classes = useStyles();
   const { classes1 } = props;
-   
+  
   const handleFormSubmit = event => {
     console.log("handleFormSubmit");
       event.preventDefault();
@@ -98,12 +98,14 @@ export const SignInSide = (props) => {
           console.log(decoded);
           localStorage.setItem("username", decoded.sub)
           localStorage.setItem("Author", decoded.authorities)
-          window.location.href = "http://localhost:3000/dashboard"
-          // localStorage.setItem("Author", decoded.)
-          // dispatch({
-          //     type: "LOGIN",
-          //     payload: resJson
-          // })
+
+          if(localStorage.getItem("Author") === "admin,"){
+            window.location.href = "http://localhost:3000/dashboard"
+          }
+          else{
+            window.location.href = "http://localhost:3000/dashboardUser"
+          }
+          
         })
         .catch(error => {
           setData({

@@ -18,8 +18,13 @@ import Box from '@material-ui/core/Box';
 import useAxios from 'axios-hooks'
 import axios from 'axios'
 // import GridItem from '../Grid/GridItem';
+import Navbar from '../Navbar';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+  },
+  
     paper: {
       marginTop: theme.spacing(8),
       display: 'flex',
@@ -103,7 +108,7 @@ export default function NewJobManager(props) {
       });
       axios.post("http://localhost:8080/newJobManager", data)
       .then(
-        window.location.href = "http://localhost:3000/jobData"
+        window.location.href = "http://localhost:3000/dashboard"
       ) 
     };
 
@@ -115,7 +120,11 @@ export default function NewJobManager(props) {
     setOpen(true);
   };
   return (
-    
+    <React.Fragment>
+    <div className={classes.root}>
+    <CssBaseline />
+    <Navbar />
+    <main className={classes.content}></main>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -176,6 +185,7 @@ export default function NewJobManager(props) {
       </div>
       
     </Container>
-
+</div>
+</React.Fragment>
   );
 }
