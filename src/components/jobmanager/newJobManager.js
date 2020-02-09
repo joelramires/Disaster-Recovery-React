@@ -18,7 +18,6 @@ import Box from '@material-ui/core/Box';
 import useAxios from 'axios-hooks'
 import axios from 'axios'
 // import GridItem from '../Grid/GridItem';
-import axios from 'axios'
 
 
 const useStyles = makeStyles(theme => ({
