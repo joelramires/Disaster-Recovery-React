@@ -18,7 +18,8 @@ import { Grid } from '@material-ui/core';
 import { purple, red, deepOrange } from '@material-ui/core/colors';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import { withStyles } from "@material-ui/core/styles";
-import axios from 'axios'
+import axios from 'axios';
+import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 import Navbar from './Navbar';
 
 const StyledTableCell = withStyles(theme => ({
@@ -108,7 +109,7 @@ async function handleApproval(id) {
               <Tooltip id="tooltip-top-start"
               title="Approval" onClick={() => handleApproval(timeSheet.timeSheetId)} placement="top">
               <IconButton style={{ color: purple[500] }} aria-label="Approv">
-              <Edit />
+              <SpellcheckIcon />
             </IconButton>
             </Tooltip>}
               </TableCell>

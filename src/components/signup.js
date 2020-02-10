@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -12,10 +13,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React from 'react';
 import Copyright from './Media/copyright';
 import axios from 'axios';
-
+import Alert from '@material-ui/lab/Alert';
+import validate from './Validation/ValidationRules';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -48,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 export default function SignUp() {
   const classes = useStyles();
   // const [role, setrole] = React.useState('');
-
+  
   const initialState = React.useState({
     firstName: "",
     lastName: "",
@@ -57,7 +58,12 @@ export default function SignUp() {
     role: ""
   });
 
+  // const disableButton = !firstName || !lastName || !email || !password || !role
+  
+  const [errors, setErrors] = useState(initialState);
+
   const [data, setData] = React.useState(initialState);
+    
   const handleInputChange = event => {
     setData({
       ...data,
@@ -66,30 +72,19 @@ export default function SignUp() {
   };
 
   const handleInputChangeRole = event => {
+    
     setData({
       ...data,
       [event.target.name]: event.target.value,
     });
+    
     console.log(data.role)
   };
 
   const handleFormSubmit = event => {
     console.log("handleFormSubmit");
       event.preventDefault();
-      setData({
-        ...data,
-        isSubmitting: true,
-        errorMessage: null
-      });
-      axios.post("http://localhost:8080/newUser", data)
-      .then(
-        window.location.href = "http://localhost:3000/signin"
-      )
-  };
-
-  const handleFormSubmit = event => {
-    console.log("handleFormSubmit");
-      event.preventDefault();
+      setErrors(validate(data)); 
       setData({
         ...data,
         isSubmitting: true,
@@ -117,25 +112,37 @@ export default function SignUp() {
             name="firstName" label="First Name" type="text"
             id="firstName" autoComplete="firstName" autoFocus
             value={data.firstName} onChange={handleInputChange} />
-        
+        {errors.firstName && (
+                    <Alert severity="error">{errors.firstName}</Alert>
+                  )}
+
         <TextField
             variant="outlined" margin="normal" required
             fullWidth name="lastName" label="Last Name"
             type="text" id="lastName" autoComplete="lastName"
             autoFocus value={data.lastName} onChange={handleInputChange} />
-        
+        {errors.lastName && (
+                    <Alert severity="error">{errors.lastName}</Alert>
+                  )}
+
         <TextField
             variant="outlined" margin="normal" required
             fullWidth id="email" label="Email"
             name="email" autoComplete="email" autoFocus
             value={data.email} onChange={handleInputChange} />
-        
+        {errors.email && (
+                    <Alert severity="error">{errors.email}</Alert>
+                  )}
+
         <TextField
             variant="outlined" margin="normal" required
             fullWidth name="password" label="Password"
             type="password" id="password" autoComplete="current-password"
             value={data.password} onChange={handleInputChange} />
           <div>
+          {errors.password && (
+                    <Alert severity="error">{errors.password}</Alert>
+                  )}
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-controlled-open-select-label">Role</InputLabel>
         <Select
@@ -144,7 +151,11 @@ export default function SignUp() {
           <MenuItem value="admin">admin</MenuItem>
           <MenuItem value="contractor">contractor</MenuItem>
         </Select>
+        {errors.role && (
+                    <Alert severity="error">{errors.role}</Alert>
+                  )}
       </FormControl>
+     
     </div>
           <Button
             type="submit"
@@ -152,8 +163,10 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={(data.firstName == '' || data.lastName == '' || data.email == '' || 
+              data.password == '' || data.role == '') ? true : false}
           >
-            Create User
+            Sign Up
           </Button>
           <Grid container></Grid>
           <Box mt={5}>

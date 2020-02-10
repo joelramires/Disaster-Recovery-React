@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 // import CssBaseline from "@material-ui/core/CssBaseline";
@@ -21,7 +21,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import useAxios from 'axios-hooks';
 import axios from 'axios';
 import NavbarUser from '../NavbarUser';
-
+import Alert from '@material-ui/lab/Alert';
+import validate from '../Validation/ValidationRules';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,7 +50,7 @@ export default function NewTimeSheet() {
   const classes = useStyles();
   const initialState = {
     siteCode:"",
-    date:"2020-02-04",
+    date:"2020-02-10",
     jobCode1:"",
     jobHour1:"",
     machineCode1:"",
@@ -63,6 +64,8 @@ export default function NewTimeSheet() {
     machineCode3:"",
     machineHour3:"",
   }
+
+  const [errors, setErrors] = useState(initialState);
 
   var[{data,loading, error}]=useAxios(
     'http://localhost:8080/jobManager'
@@ -88,6 +91,7 @@ export default function NewTimeSheet() {
       const handleFormSubmit = event => {
         console.log("handleFormSubmit");
           event.preventDefault();
+          setErrors(validate(data)); 
           setData({
             ...data,
             isSubmitting: true,
@@ -125,6 +129,9 @@ export default function NewTimeSheet() {
             <TextField variant="outlined" margin="normal"
                                 required fullWidth autoFocus
                                 id="siteCode" label="Site Code" name="siteCode" onChange={handleInputChange}/>
+              {errors.siteCode && (
+                    <Alert severity="error">{errors.siteCode}</Alert>
+                  )}
             </Grid>
             {/* <Grid item xs>
             <TextField variant="outlined" margin="normal"
@@ -133,7 +140,7 @@ export default function NewTimeSheet() {
             </Grid> */}
             <Grid item xs>
             <TextField id="date" label="Date" type="date" name="date"
-                            defaultValue="2020-02-04" className={classes.textField}
+                            defaultValue="2020-02-10" className={classes.textField}
                             InputLabelProps={{shrink: true,}} onChange={handleInputChange}/>
             </Grid>
         </Grid>
@@ -197,7 +204,7 @@ export default function NewTimeSheet() {
               </FormControl>
             </Grid>
             <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
+            <TextField type="number" variant="outlined" margin="normal" fullWidth 
                             id="jobHour3" label="Hrs. Worked" name="jobHour3" onChange={handleInputChange}/>
             </Grid>
         </Grid>
@@ -226,7 +233,7 @@ export default function NewTimeSheet() {
             </FormControl>
             </Grid>
             <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
+            <TextField type="number" variant="outlined" margin="normal" fullWidth 
                             id="machineHour1" label="Hrs. Used" name="machineHour1" onChange={handleInputChange}/>
             </Grid>
         </Grid>
@@ -244,7 +251,7 @@ export default function NewTimeSheet() {
             </FormControl>
             </Grid>
             <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
+            <TextField type="number" variant="outlined" margin="normal" fullWidth 
                             id="machineHour2" label="Hrs. Used" name="machineHour2" onChange={handleInputChange}/>
             </Grid>
         </Grid>
@@ -262,7 +269,7 @@ export default function NewTimeSheet() {
             </FormControl>
             </Grid>
             <Grid item xs>
-            <TextField variant="outlined" margin="normal" fullWidth 
+            <TextField type="number"variant="outlined" margin="normal" fullWidth 
                             id="machineHour3" label="Hrs. Used" name="machineHour3" onChange={handleInputChange}/>
             </Grid>
         </Grid>
@@ -279,7 +286,9 @@ export default function NewTimeSheet() {
 
             <Grid item xs={12} sm={4}>
             <Button type="submit" variant="contained" color="primary" size="large" fullWidth
-                className={classes.button} startIcon={<SaveIcon />} >
+                className={classes.button} startIcon={<SaveIcon />}
+                disabled={(data.siteCode == '' || data.laborCode == '' || data.jobHour1 == '' || 
+            data.machineCode == '' || data.machineHour1 == '') ? true : false}  >
                 Submit
             </Button>
             </Grid>

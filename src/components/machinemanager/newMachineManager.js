@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -15,6 +15,9 @@ import Box from '@material-ui/core/Box';
 import axios from 'axios';
 import Navbar from '../Navbar';
 import Drawer from '../Drawer';
+import Alert from '@material-ui/lab/Alert';
+import validate from '../Validation/ValidationRules';
+
 
 const drawerWidth = 260;
 
@@ -114,10 +117,13 @@ export default function NewMachineManager() {
   const initialState = {
     machineCode:"",
     description:"",
-    rate:"0",
-    maxHours:"0",
+    rate:"",
+    maxHours:"",
   }
+
+  const [errors, setErrors] = useState(initialState);
   const [data, setData] = React.useState(initialState);
+  
   const handleInputChange = event => {
     setData({
       ...data,
@@ -128,6 +134,7 @@ export default function NewMachineManager() {
   const handleFormSubmit = event => {
     console.log("handleFormSubmit");
       event.preventDefault();
+      setErrors(validate(data)); 
       setData({
         ...data,
         isSubmitting: true,
@@ -161,27 +168,39 @@ export default function NewMachineManager() {
                                 required fullWidth
                                 id="machineCode" label="Machine Code" name="machineCode" onChange={handleInputChange}
                                 value={data.machineCode}/>
+              {errors.machineCode && (
+                    <Alert severity="error">{errors.machineCode}</Alert>
+                  )}
             </Grid>
             <Grid item xs={12} >
               <TextField variant="outlined" margin="normal"
                             required fullWidth 
                             id="description" label="Description" name="description" onChange={handleInputChange}
                             value={data.description}/>
+              {errors.description && (
+                    <Alert severity="error">{errors.description}</Alert>
+                  )}
             </Grid>
             <Grid item xs={12}>
               <TextField variant="outlined" margin="normal"
-                            required fullWidth 
+                            required fullWidth type="number"
                             id="rate" label="Hourly Rate" name="rate" onChange={handleInputChange}
                             value={data.rate}/>
+              {errors.rate && (
+                    <Alert severity="error">{errors.rate}</Alert>
+                  )}
             </Grid>
             <Grid item xs={12}>
               <TextField variant="outlined" margin="normal"
-                            required fullWidth 
+                            required fullWidth type="number"
                             id="maxHours" label="Max Hour Per Day" name="maxHours" onChange={handleInputChange}
                             value={data.maxHours}/>
+              {errors.maxHours && (
+                    <Alert severity="error">{errors.maxHours}</Alert>
+                  )}
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Button type="reset" fullWidth
+            <Button type="reset" fullWidth
                 variant="contained" color="secondary" className={classes.reset}
                 startIcon={<RefreshIcon />} size="large" fullWidth >
                 Reset
@@ -190,7 +209,9 @@ export default function NewMachineManager() {
 
             <Grid item xs={12} sm={6}>
             <Button type="submit" variant="contained" color="primary" size="large" fullWidth
-                className={classes.button} startIcon={<SaveIcon />} >
+                className={classes.button} startIcon={<SaveIcon />}
+                disabled={(data.machineCode == '' || data.description == '' || data.rate == '' || 
+            data.maxHours == '') ? true : false} >
                 Submit
             </Button>
             </Grid>

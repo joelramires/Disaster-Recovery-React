@@ -16,6 +16,9 @@ import { useUser } from './useUser';
 import Dashboard from './dashboard';
 import { AuthContext } from '../App';
 import jwt_decode from 'jwt-decode'
+import Alert from '@material-ui/lab/Alert';
+import validate from './Validation/ValidationRules';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,6 +60,24 @@ export const SignInSide = (props) => {
     isSubmitting:false,
     errorMessage:null,
   }
+
+  const [errors, setErrors] = useState({email:"", password: ""});
+
+  // function validate(data) {
+  //   let errors = {};
+  //   if (!data.email) {
+  //     errors.email = 'Email address is required';
+  //   } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+  //     errors.email = 'Email address is invalid';
+  //   }
+  //   if (!data.password) {
+  //     errors.password = 'Password is required';
+  //   } else if (data.password.length < 8) {
+  //     errors.password = 'Password must be 3 or more characters';
+  //   }
+  //   return errors;
+  // };
+
   const [data, setData] = React.useState(initialState);
   const handleInputChange = event => {
     setData({
@@ -70,6 +91,8 @@ export const SignInSide = (props) => {
   const handleFormSubmit = event => {
     console.log("handleFormSubmit");
       event.preventDefault();
+      setErrors(validate(data));  
+
       setData({
         ...data,
         isSubmitting: true,
@@ -135,18 +158,26 @@ export const SignInSide = (props) => {
               required fullWidth id="email" label="Email Address"
               name="email" autoComplete="email" autoFocus
               onChange={handleInputChange} value={data.email} />
+              {errors.email && (
+                    <Alert severity="error">{errors.email}</Alert>
+                  )}
             
             <TextField variant="outlined" margin="normal"
               required fullWidth name="password"
               label="Password" type="password" id="password"
               autoComplete="current-password"
               onChange={handleInputChange} value={data.password} />
+              {errors.password && (
+                    <Alert severity="error">{errors.password}</Alert>
+                  )}
 
             <Button type="submit" fullWidth variant="contained" 
-              color="primary" className={classes.submit} >Sign In </Button>
+              color="primary" className={classes.submit} 
+              disabled={(data.email == '' || data.password == '') ? true : false}
+              >Sign In </Button>
 
             {data.errorMessage && (
-              <span className="form-error">{data.errorMessage}</span>
+              <Alert severity="error">Email or Password is incorrect!</Alert>
             )}
 
            {/* <button disabled={data.isSubmitting}>
