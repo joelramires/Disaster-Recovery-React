@@ -19,6 +19,8 @@ import useAxios from 'axios-hooks'
 import axios from 'axios'
 // import GridItem from '../Grid/GridItem';
 import Navbar from '../Navbar';
+import Alert from '@material-ui/lab/Alert';
+import validate from '../Validation/ValidationRules';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,10 +54,11 @@ export default function NewJobManager(props) {
   const initialState = {
     jobCode:"",
     jobDescription:"",
-    rateHourly:"0",
-    maxHour:"0",
+    rateHourly:"",
+    maxHours:"",
   }
 
+  const [errors, setErrors] = useState(initialState);
   // const [machineCode, setMachineCode] = React.useState("");
 
   // const initialState = {jobCode:'', jobDescription:'', maxHours:'', rateHourly:'' }
@@ -101,6 +104,7 @@ export default function NewJobManager(props) {
   const handleFormSubmit = event => {
     console.log("handleFormSubmit");
       event.preventDefault();
+      setErrors(validate(data));  
       setData({
         ...data,
         isSubmitting: true,
@@ -141,24 +145,36 @@ export default function NewJobManager(props) {
                                 required fullWidth autoFocus
                                 id="jobCode" label="Job Code" name="jobCode" onChange={handleInputChange}
                                 value={data.jobCode}/>
+              {errors.jobCode && (
+                    <Alert severity="error">{errors.jobCode}</Alert>
+                  )}
             </Grid>
             <Grid item xs={12} >
               <TextField variant="outlined" margin="normal"
                             required fullWidth 
                             id="jobDescription" label="Description" name="jobDescription" onChange={handleInputChange}
                             value={data.jobDescription}/>
+              {errors.jobDescription && (
+                    <Alert severity="error">{errors.jobDescription}</Alert>
+                  )}              
             </Grid>
             <Grid item xs={12}>
               <TextField variant="outlined" margin="normal"
-                            required fullWidth 
+                            required fullWidth type="number"
                             id="rateHourly" label="Hourly Rate" name="rateHourly" onChange={handleInputChange}
                             value={data.rateHourly}/>
+              {errors.rateHourly && (
+                    <Alert severity="error">{errors.rateHourly}</Alert>
+                  )}              
             </Grid>
             <Grid item xs={12}>
               <TextField variant="outlined" margin="normal"
-                            required fullWidth 
-                            id="maxHour" label="Max Hour" name="maxHour" onChange={handleInputChange}
+                            required fullWidth type="number"
+                            id="maxHours" label="Max Hours" name="maxHours" onChange={handleInputChange}
                             value={data.maxHours}/>
+              {errors.maxHours && (
+                    <Alert severity="error">{errors.maxHours}</Alert>
+                  )}              
             </Grid>
             <Grid item xs={12} sm={6}>
               <Button type="reset" fullWidth
@@ -171,8 +187,10 @@ export default function NewJobManager(props) {
             <Grid item xs={12} sm={6}>
 
             <Button type="submit" variant="contained" color="primary" size="large" fullWidth
-                className={classes.button} startIcon={<SaveIcon />} >
-
+                className={classes.button} startIcon={<SaveIcon />}
+                disabled={(data.jobCode == '' || data.jobDescription == '' || data.rateHourly == '' || 
+            data.maxHours == '') ? true : false}
+                >
                 Submit
             </Button>
             </Grid>
